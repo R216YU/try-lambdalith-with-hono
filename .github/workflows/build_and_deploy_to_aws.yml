@@ -42,6 +42,11 @@ jobs:
         with:
           use-installer: true
 
+      - name: Copy build artifacts for SAM
+        run: |
+          mkdir -p aws/dist
+          cp -r dist/* aws/dist/
+
       - name: Build SAM application
         working-directory: ./aws
         run: sam build --template-file sam_apigateway_lambda_template.yaml
