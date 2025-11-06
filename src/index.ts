@@ -1,10 +1,10 @@
-import { Hono } from 'hono'
-import { handle } from 'hono/aws-lambda'
+import { serve } from "@hono/node-server";
+import app from "./app";
 
-const app = new Hono()
+const port = 3000;
+console.log(`Server is running on http://localhost:${port}`);
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
-
-export const handler = handle(app)
+serve({
+  fetch: app.fetch,
+  port,
+});

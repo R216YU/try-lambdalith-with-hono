@@ -2,14 +2,16 @@
   "name": "try-lambdalith-with-hono",
   "type": "module",
   "scripts": {
-    "build": "esbuild --bundle --outfile=./dist/index.js --platform=node --target=node20 ./src/index.ts",
+    "build": "esbuild --bundle --outfile=./dist/index.js --platform=node --target=node20 --format=cjs ./src/handler.ts",
+    "build:dev": "esbuild --bundle --outfile=./dist/index.js --platform=node --target=node20 ./src/index.ts",
     "zip": "zip -j lambda.zip dist/index.js",
-    "update": "aws lambda update-function-code --zip-file fileb://lambda.zip --function-name hello",
-    "deploy": "run-s build zip update"
+    "dev": "tsx watch src/index.ts",
+    "deploy": "pnpm run build && sam deploy --guided"
   },
   "devDependencies": {
     "esbuild": "^0.21.4",
-    "npm-run-all2": "^6.2.0"
+    "@hono/node-server": "^1.14.1",
+    "tsx": "^4.19.4"
   },
   "dependencies": {
     "hono": "^4.10.4"
